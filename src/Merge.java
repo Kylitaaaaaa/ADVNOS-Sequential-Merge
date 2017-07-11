@@ -21,7 +21,7 @@ public class Merge {
 
 		
 
-		while(checkIfReadyForMerge(templist)){
+		while(! checkIfReadyForMerge(templist)){
 			ArrayList<ArrayList<Integer>> templist2 = new ArrayList<ArrayList<Integer>>();
 			for(int x = 0; x<templist.size(); x++){
 				if(templist.get(x).size() > 1){
@@ -45,8 +45,8 @@ public class Merge {
 	public boolean checkIfReadyForMerge(ArrayList<ArrayList<Integer>> list){
 		for(int x = 0; x<list.size(); x++)
 			if(list.get(x).size() > 1)
-				return true;
-		return false;
+				return false;
+		return true;
 	}
 	
 	public ArrayList<ArrayList<Integer>> merge(ArrayList<ArrayList<Integer>> list){
