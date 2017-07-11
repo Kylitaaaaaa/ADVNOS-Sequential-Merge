@@ -28,7 +28,7 @@ public class MergeSortThreadStopper implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if(Thread.activeCount() > 6){
+		if(Thread.activeCount() > 5){
 
 			//get midpoint
 			int mid = toSort.size()/2;
