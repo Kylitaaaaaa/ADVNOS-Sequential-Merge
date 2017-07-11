@@ -59,6 +59,24 @@ public class Driver {
 		return list;
 	}
 	
+	public static ArrayList<Integer> getAscending(int length){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		for(int i=1; i<=length; i++)
+			list.add(i);
+		return list;
+	}
+	
+	public static ArrayList<Integer> getDescending(int length){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		for(int i=length; i>0; i--){
+			list.add(i);
+			//System.out.println(i);
+		}
+		return list;
+	}
+	
 	
 	
 	public static ArrayList <Integer> createRandomArray(int length) {
