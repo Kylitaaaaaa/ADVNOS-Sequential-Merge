@@ -53,8 +53,7 @@ public class MergeSortThreadStopper implements Runnable{
 			merge(thread1.list, thread2.list);
 			//end
 		}else{
-			list = toSort;
-			Collections.sort(list);
+			list = sequential((ArrayList<Integer>) toSort);
 		}
 
 	}
@@ -90,6 +89,22 @@ public class MergeSortThreadStopper implements Runnable{
 
 	public void setList(List<Integer> list) {
 		this.list = list;
+	}
+	
+	public static List<Integer> sequential(ArrayList<Integer> list){
+		Merge m = new Merge();
+		ArrayList<ArrayList<Integer>> t = m.split(list);
+		
+		//finalList is final sorted
+		ArrayList<ArrayList<Integer>> finalList = m.merge(t);
+		ArrayList<Integer> finalFinal = new ArrayList<Integer>();
+
+		for(int i=0; i<finalList.get(0).size(); i++){
+			finalFinal.add(finalList.get(0).get(i));
+		}
+		
+		return finalFinal;
+
 	}
 	
 }

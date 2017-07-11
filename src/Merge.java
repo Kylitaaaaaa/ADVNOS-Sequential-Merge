@@ -2,16 +2,16 @@ import java.util.*;
 
 public class Merge {
 	
-	public ArrayList <Integer> genList(ArrayList <Integer> list, int start, int end){
+	public ArrayList <Integer> genList(List<Integer> origlist, int start, int end){
 		ArrayList<Integer> tempList = new ArrayList<Integer>();
 		
 		for(int i=start; i<end; i++)
-			tempList.add(list.get(i));
+			tempList.add(origlist.get(i));
 		
 		return tempList;
 	}
 	
-	public ArrayList<ArrayList<Integer>> split(ArrayList <Integer> origlist){
+	public ArrayList<ArrayList<Integer>> split(List <Integer> origlist){
 		ArrayList<ArrayList<Integer>> templist = new ArrayList<ArrayList<Integer>>();
 		int mid = origlist.size()/2;
 		
