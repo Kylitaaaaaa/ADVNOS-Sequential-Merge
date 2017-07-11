@@ -6,82 +6,56 @@ import java.util.Random;
 public class Driver {
 	private static final Random RAND = new Random(42);
 	private static final int bound = 100;
-//	public static void main(String[] args) {
-//		Merge m = new Merge();
-//		ArrayList<Integer> list = new ArrayList<Integer>(); 
-//		list.add(54);
-//		list.add(-26);
-//		list.add(923);
-//		list.add(-2317);
-//		list.add(772);
-//		list.add(10000);
-//		list.add(31);
-//		list.add(44232);
-//		list.add(5345);
-//		list.add(230);
-//		list.add(230);
-//		list.add(230);
-//		list.add(31);
-//		//list.add(-1);
-//		ArrayList<ArrayList<Integer>> t = m.split(list);
-//		
-//		System.out.println("After Split: ");
-//		
-//		for(int i=0; i<t.size(); i++){
-//			for(int j=0; j<t.get(i).size(); j++)
-//				System.out.print("\t" + t.get(i).get(j));
-//			System.out.println();
-//		}
-//		System.out.println();
-//		
-//		ArrayList<ArrayList<Integer>> finalList = m.merge(t);
-//		
-//		System.out.println();
-//		System.out.println("Final Answer: ");
-//		
-//		m.print(finalList);
-//		
-//	}
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("here");
-		
-        long ta = System.currentTimeMillis();
-        sortRandom(1000);
-        //sortRandom(100);
-        long tb = System.currentTimeMillis();
-        System.out.println("TIME: "+(tb-ta)+" MS");
+		ArrayList<Integer> list = sortRandom(10000000);
+		parallel(list);
+		sequential(list);
 		
 	}
 	
-	public static void sortRandom(int length){
-		ArrayList<Integer> list = createRandomArray(length); 
-		
-		for(int i=0; i<list.size(); i++)
-			System.out.println(list.get(i));
-		System.out.println("DONE PRINTING");
+	public static void sequential(ArrayList<Integer> list){
+		/*****Start of Sequential*****/
+		long ta = System.currentTimeMillis();
 		
 		Merge m = new Merge();
 		ArrayList<ArrayList<Integer>> t = m.split(list);
 		
-		System.out.println("After Split: ");
-		
-		for(int i=0; i<t.size(); i++){
-			for(int j=0; j<t.get(i).size(); j++)
-				System.out.print("\t" + t.get(i).get(j));
-			System.out.println();
-		}
-		System.out.println();
-		
+		//finalList is final sorted
 		ArrayList<ArrayList<Integer>> finalList = m.merge(t);
 		
-		System.out.println();
-		System.out.println("Final Answer: ");
+		long tb = System.currentTimeMillis();
+        System.out.println("SEQUENTIAL TIME: "+(tb-ta)+" MS");
 		
-		m.print(finalList);
-
+		/*****End of Sequential*****/
+	}
+	
+	public static void parallel(ArrayList<Integer> list){
+		/*****Start of Parallel*****/
+        long ta = System.currentTimeMillis();
+		MergeSortThreadStopper sort = new MergeSortThreadStopper(list);
+		
+		while(sort.t.isAlive()){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		long tb = System.currentTimeMillis();
+        System.out.println("PARALLEL TIME: "+(tb-ta)+" MS");
+		
+		/*****End of Parallel*****/
+	}
+	
+	public static ArrayList<Integer> sortRandom(int length){
+		ArrayList<Integer> list = createRandomArray(length); 
+		
+		return list;
 	}
 	
 	

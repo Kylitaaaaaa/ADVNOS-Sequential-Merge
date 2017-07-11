@@ -93,8 +93,8 @@ public class Merge {
 			
 			
 			listcopy = semifinal;
-			System.out.println("Merge " + mergeCount);
-			print(listcopy);
+			//System.out.println("Merge " + mergeCount);
+			//print(listcopy);
 		}
 		
 		return listcopy;
@@ -103,10 +103,12 @@ public class Merge {
 	}
 		
 	public void print(ArrayList<ArrayList<Integer>> templist){
+		
 		for(int i=0; i<templist.size(); i++){
 			for(int j=0; j<templist.get(i).size(); j++)
 				System.out.print("\t" + templist.get(i).get(j));
 			System.out.println();
 		}
+		
 	}
 }
