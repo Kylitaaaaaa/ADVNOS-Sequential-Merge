@@ -12,7 +12,7 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int len=10;
-//		for(int i=0; i<5; i++){
+		for(int i=0; i<5; i++){
 			ArrayList<Integer> list = sortRandom(len);
 			System.out.println("# of Elements: "+len);
 			//mergeSorter(list);
@@ -22,20 +22,20 @@ public class Driver {
 			sequential(list);
 			len=len*10;
 			
-//		}
-//		len=len/10;
-//		len=len+100000;
-//		for(int i=0; i<14; i++){
-//			ArrayList<Integer> list = sortRandom(len);
-//			System.out.println("# of Elements: "+len);
-//			//mergeSorter(list);
-////			forkJoin(list,10);
-//			forkJoinAdapt(list);
-//			parallel(list);
-//			sequential(list);
-//			len=len+100000;
-//			
-//		}
+		}
+		len=len/10;
+		len=len+100000;
+		for(int i=0; i<14; i++){
+			ArrayList<Integer> list = sortRandom(len);
+			System.out.println("# of Elements: "+len);
+			//mergeSorter(list);
+//			forkJoin(list,10);
+			forkJoinAdapt(list);
+			parallel(list);
+			sequential(list);
+			len=len+100000;
+			
+		}
 		
 	}
 	
@@ -48,23 +48,23 @@ public class Driver {
 		fj.invoke();
 		long tb = System.currentTimeMillis();
 		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-//		System.out.println(""+(tb-ta));
+		System.out.println(""+(tb-ta));
 		System.out.println(""+(afterMemory-beforeMemory));
 		/*****End of Sequential*****/
 	}
 	
 	public static void forkJoinAdapt(List<Integer> list){
 		Runtime.getRuntime().gc();
-		System.out.println(list.toString());
+//		System.out.println(list.toString());
 		long ta = System.currentTimeMillis();
 		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
 		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length, numbers.length/3);	
 		fj.invoke();
-		System.out.println(Arrays.toString(fj.result));
+//		System.out.println(Arrays.toString(fj.result));
 		long tb = System.currentTimeMillis();
 		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-//		System.out.println(""+(tb-ta));
+		System.out.println(""+(tb-ta));
 		System.out.println(""+(afterMemory-beforeMemory));		/*****End of Sequential*****/
 	}
 
@@ -87,7 +87,7 @@ public class Driver {
 		
 		long tb = System.currentTimeMillis();
 		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-//		System.out.println(""+(tb-ta));
+		System.out.println(""+(tb-ta));
 		System.out.println(""+(afterMemory-beforeMemory));		/*****End of Sequential*****/
 		
 		/*****End of Sequential*****/
@@ -103,7 +103,7 @@ public class Driver {
         long tb = System.currentTimeMillis();
         long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
-//		System.out.println(""+(tb-ta));
+		System.out.println(""+(tb-ta));
 		System.out.println(""+(afterMemory-beforeMemory));
 
 		/*****End of Parallel*****/
