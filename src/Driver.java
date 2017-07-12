@@ -11,16 +11,51 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int len=10;
-		for(int i=0; i<8; i++){
+		for(int i=0; i<5; i++){
 			ArrayList<Integer> list = sortRandom(len);
 			System.out.println("# of Elements: "+len);
-			parallel(list);
+			//mergeSorter(list);
 			sequential(list);
+			forkJoin(list);
+			parallel(list);
 			len=len*10;
+			
+		}
+		len=len/10;
+		len=len+100000;
+		for(int i=0; i<14; i++){
+			ArrayList<Integer> list = sortRandom(len);
+			System.out.println("# of Elements: "+len);
+			//mergeSorter(list);
+			sequential(list);
+			forkJoin(list);
+			parallel(list);
+			len=len+100000;
+			
 		}
 		
 	}
 	
+	public static void forkJoin(List<Integer> list){
+		long ta = System.currentTimeMillis();
+		int[] numbers = toIntArray(list);
+		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1,10);	
+		long tb = System.currentTimeMillis();
+        System.out.println(""+(tb-ta)+"");
+		
+		/*****End of Sequential*****/
+	}
+	
+	public static void forkJoinAdapt(List<Integer> list){
+		long ta = System.currentTimeMillis();
+		int[] numbers = toIntArray(list);
+		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1, numbers.length/3);	
+		long tb = System.currentTimeMillis();
+        System.out.println(""+(tb-ta)+"");
+		
+		/*****End of Sequential*****/
+	}
+
 	public static void sequential(ArrayList<Integer> list){
 		/*****Start of Sequential*****/
 		long ta = System.currentTimeMillis();
@@ -37,7 +72,7 @@ public class Driver {
 		}
 		
 		long tb = System.currentTimeMillis();
-        System.out.println("SEQUENTIAL TIME: "+(tb-ta)+" MS");
+        System.out.println(""+(tb-ta)+"");
 		
 		/*****End of Sequential*****/
 	}
@@ -48,7 +83,18 @@ public class Driver {
         long ta = System.currentTimeMillis();
         sortParallel(list);
         long tb = System.currentTimeMillis();
-        System.out.println("PARALLEL TIME: "+(tb-ta)+" MS");
+        System.out.println(""+(tb-ta)+"");
+		
+		/*****End of Parallel*****/
+	}
+
+	public static void parallelSlow(ArrayList<Integer> list){
+		/*****Start of Parallel*****/
+
+        long ta = System.currentTimeMillis();
+        sortParallelSlow(list);
+        long tb = System.currentTimeMillis();
+        System.out.println("PARALLEL SLOW TIME: "+(tb-ta)+" MS");
 		
 		/*****End of Parallel*****/
 	}
@@ -91,6 +137,23 @@ public class Driver {
 	public static void sortParallel(List a){
 
 		MergeSortThreadStopper sort = new MergeSortThreadStopper(a);
+		Thread sortT = new Thread(sort);
+		sortT.start();
+		
+		try {
+			sortT.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+	
+
+	public static void sortParallelSlow(List a){
+
+		MergeSort sort = new MergeSort(a);
 		
 		while(sort.t.isAlive()){
 			try {
@@ -104,6 +167,12 @@ public class Driver {
 
 	}
 	
+	public static int[] toIntArray(List<Integer> list){
+		  int[] ret = new int[list.size()];
+		  for(int i = 0;i < ret.length;i++)
+		    ret[i] = list.get(i);
+		  return ret;
+		}
 	
 
 }

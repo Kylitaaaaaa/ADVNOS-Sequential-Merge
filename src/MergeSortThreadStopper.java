@@ -13,8 +13,6 @@ public class MergeSortThreadStopper implements Runnable{
 		super();
 		this.toSort = toSort;
 		list = new ArrayList<Integer>();
-		t = new Thread(this);
-		t.start();
 	}
 
 	public Thread getT() {
@@ -28,25 +26,29 @@ public class MergeSortThreadStopper implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if(Thread.activeCount() > 5){
+		int maxThreads = 5;
+		if(Thread.activeCount() > maxThreads){
 
 			//get midpoint
 			int mid = toSort.size()/2;
 			
-			//start thread 1
+			//start th	read 1
 			MergeSortThreadStopper thread1 = new MergeSortThreadStopper(toSort.subList(0, mid));
 			
 			//start thread 2
 			MergeSortThreadStopper thread2 = new MergeSortThreadStopper(toSort.subList(mid, toSort.size()));
 			
-			//while thread 1 & 2 not terminated -> keep waiting
-			while(thread1.t.isAlive() || thread2.t.isAlive()){
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			Thread t1 = new Thread(thread1);
+			t1.start();
+			Thread t2 = new Thread(thread1);
+			t2.start();
+			
+			try {
+				t1.join();
+				t2.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			//merge lists of thread 1 & 2
