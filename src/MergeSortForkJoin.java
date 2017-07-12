@@ -14,7 +14,7 @@ public class MergeSortForkJoin extends RecursiveAction {
 		this.endPos = endPos;
 		this.SEQUENTIAL_THRESHOLD = thresh;
 		this.result = new int[size()];
-		this.compute();
+
 	}
     private void merge(MergeSortForkJoin left, MergeSortForkJoin right) {
         int i=0, leftPos=0, rightPos=0, leftSize = left.size(), rightSize = right.size();
