@@ -59,7 +59,7 @@ public class Driver {
 		long ta = System.currentTimeMillis();
 		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
-		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length, numbers.length/3);	
+		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length, numbers.length/5);	
 		fj.invoke();
 //		System.out.println(Arrays.toString(fj.result));
 		long tb = System.currentTimeMillis();

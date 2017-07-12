@@ -34,8 +34,7 @@ public class MergeSortForkJoin extends RecursiveAction {
  
     protected void compute() {
         if (size() < SEQUENTIAL_THRESHOLD) {
-            System.arraycopy(numbers, startPos, result, 0, size());
-            Arrays.sort(result, 0, size());
+        	sort(numbers);
         }
         else {
             int midpoint = size() / 2;
@@ -45,4 +44,11 @@ public class MergeSortForkJoin extends RecursiveAction {
             merge(left, right);
         }
     }
+    
+    public void sort(int[] nos){
+        System.arraycopy(numbers, startPos, result, 0, size());
+        Arrays.sort(result, 0, size());
+    	
+    }
+    
 }
