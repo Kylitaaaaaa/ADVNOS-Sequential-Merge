@@ -16,7 +16,8 @@ public class Driver {
 			System.out.println("# of Elements: "+len);
 			//mergeSorter(list);
 			sequential(list);
-			forkJoin(list);
+			forkJoin(list,10);
+			forkJoinAdapt(list);
 			parallel(list);
 			len=len*10;
 			
@@ -28,7 +29,8 @@ public class Driver {
 			System.out.println("# of Elements: "+len);
 			//mergeSorter(list);
 			sequential(list);
-			forkJoin(list);
+			forkJoin(list,10);
+			forkJoinAdapt(list);
 			parallel(list);
 			len=len+100000;
 			
@@ -36,22 +38,27 @@ public class Driver {
 		
 	}
 	
-	public static void forkJoin(List<Integer> list){
+	public static void forkJoin(List<Integer> list, int threshold){
+		
 		long ta = System.currentTimeMillis();
+		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
-		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1,10);	
+		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1,threshold);	
 		long tb = System.currentTimeMillis();
-        System.out.println(""+(tb-ta)+"");
+		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		System.out.println(""+(tb-ta));
 		
 		/*****End of Sequential*****/
 	}
 	
 	public static void forkJoinAdapt(List<Integer> list){
 		long ta = System.currentTimeMillis();
+		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
 		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1, numbers.length/3);	
 		long tb = System.currentTimeMillis();
-        System.out.println(""+(tb-ta)+"");
+		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		System.out.println(""+(tb-ta));
 		
 		/*****End of Sequential*****/
 	}
@@ -59,6 +66,7 @@ public class Driver {
 	public static void sequential(ArrayList<Integer> list){
 		/*****Start of Sequential*****/
 		long ta = System.currentTimeMillis();
+		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		
 		Merge m = new Merge();
 		ArrayList<ArrayList<Integer>> t = m.split(list);
@@ -72,7 +80,8 @@ public class Driver {
 		}
 		
 		long tb = System.currentTimeMillis();
-        System.out.println(""+(tb-ta)+"");
+		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		System.out.println(""+(tb-ta) );
 		
 		/*****End of Sequential*****/
 	}
@@ -81,9 +90,12 @@ public class Driver {
 		/*****Start of Parallel*****/
 
         long ta = System.currentTimeMillis();
-        sortParallel(list);
+        long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		sortParallel(list);
         long tb = System.currentTimeMillis();
-        System.out.println(""+(tb-ta)+"");
+        long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+
+		System.out.println(""+(tb-ta) );
 		
 		/*****End of Parallel*****/
 	}
