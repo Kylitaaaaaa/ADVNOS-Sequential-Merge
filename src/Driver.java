@@ -15,10 +15,10 @@ public class Driver {
 			ArrayList<Integer> list = sortRandom(len);
 			System.out.println("# of Elements: "+len);
 			//mergeSorter(list);
-			sequential(list);
-			forkJoin(list,10);
+//			forkJoin(list,10);
 			forkJoinAdapt(list);
 			parallel(list);
+			sequential(list);
 			len=len*10;
 			
 		}
@@ -28,10 +28,10 @@ public class Driver {
 			ArrayList<Integer> list = sortRandom(len);
 			System.out.println("# of Elements: "+len);
 			//mergeSorter(list);
-			sequential(list);
-			forkJoin(list,10);
+//			forkJoin(list,10);
 			forkJoinAdapt(list);
 			parallel(list);
+			sequential(list);
 			len=len+100000;
 			
 		}
@@ -41,11 +41,11 @@ public class Driver {
 	public static void forkJoin(List<Integer> list, int threshold){
 		
 		long ta = System.currentTimeMillis();
-		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
 		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1,threshold);	
 		long tb = System.currentTimeMillis();
-		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		System.out.println(""+(tb-ta));
 		
 		/*****End of Sequential*****/
@@ -53,11 +53,11 @@ public class Driver {
 	
 	public static void forkJoinAdapt(List<Integer> list){
 		long ta = System.currentTimeMillis();
-		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		int[] numbers = toIntArray(list);
 		MergeSortForkJoin fj = new MergeSortForkJoin(numbers, 0, numbers.length-1, numbers.length/3);	
 		long tb = System.currentTimeMillis();
-		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		System.out.println(""+(tb-ta));
 		
 		/*****End of Sequential*****/
@@ -66,7 +66,7 @@ public class Driver {
 	public static void sequential(ArrayList<Integer> list){
 		/*****Start of Sequential*****/
 		long ta = System.currentTimeMillis();
-		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		
 		Merge m = new Merge();
 		ArrayList<ArrayList<Integer>> t = m.split(list);
@@ -80,7 +80,7 @@ public class Driver {
 		}
 		
 		long tb = System.currentTimeMillis();
-		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		System.out.println(""+(tb-ta) );
 		
 		/*****End of Sequential*****/
@@ -90,27 +90,16 @@ public class Driver {
 		/*****Start of Parallel*****/
 
         long ta = System.currentTimeMillis();
-        long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//        long beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		sortParallel(list);
         long tb = System.currentTimeMillis();
-        long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//        long afterMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
 		System.out.println(""+(tb-ta) );
 		
 		/*****End of Parallel*****/
 	}
 
-	public static void parallelSlow(ArrayList<Integer> list){
-		/*****Start of Parallel*****/
-
-        long ta = System.currentTimeMillis();
-        sortParallelSlow(list);
-        long tb = System.currentTimeMillis();
-        System.out.println("PARALLEL SLOW TIME: "+(tb-ta)+" MS");
-		
-		/*****End of Parallel*****/
-	}
-	
 	public static ArrayList<Integer> sortRandom(int length){
 		ArrayList<Integer> list = createRandomArray(length); 
 		
@@ -163,21 +152,6 @@ public class Driver {
 	}
 	
 
-	public static void sortParallelSlow(List a){
-
-		MergeSort sort = new MergeSort(a);
-		
-		while(sort.t.isAlive()){
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-
-	}
 	
 	public static int[] toIntArray(List<Integer> list){
 		  int[] ret = new int[list.size()];

@@ -5,7 +5,7 @@ public class MergeSortForkJoin extends RecursiveAction {
     private int SEQUENTIAL_THRESHOLD = 6;
 	private int[] numbers;
 	private int startPos, endPos;
-    private int[] result;
+    int[] result;
 
     public MergeSortForkJoin(int[] numbers, int startPos, int endPos, int thresh) {
 		super();
@@ -13,6 +13,8 @@ public class MergeSortForkJoin extends RecursiveAction {
 		this.startPos = startPos;
 		this.endPos = endPos;
 		this.SEQUENTIAL_THRESHOLD = thresh;
+		this.result = new int[size()];
+		this.compute();
 	}
     private void merge(MergeSortForkJoin left, MergeSortForkJoin right) {
         int i=0, leftPos=0, rightPos=0, leftSize = left.size(), rightSize = right.size();
